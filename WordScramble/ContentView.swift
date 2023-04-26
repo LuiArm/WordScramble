@@ -42,21 +42,26 @@ struct ContentView: View {
             }message: {
                 Text(errorMessage)
             }
+            .toolbar {
+                Button("Start New Game", action: startGame)
+            }
         }
     }
     
     func addNewWord() {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        guard answer.count > 0 else { return }
+        guard answer.count > 3 else {
+          return wordError(title: "Answer too short", message: "Try longer answer!")
+        }
         
         //Extra validation to come
         guard isOriginal(word: answer) else {
-            wordError(title: "Word used already", message: "Be more original")
+            wordError(title: "Word used already", message: "Be more original!")
             return
         }
         
         guard isPossible(word: answer) else {
-            wordError(title: "Word not possible", message: "You can not spell that word from '\(rootWord)'")
+            wordError(title: "Word not possible", message: "You can not spell that word from '\(rootWord)'!")
             return
         }
         
